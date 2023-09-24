@@ -15,54 +15,43 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Circ.NET\MatrixNew\LinearSys.cpp">
-      <Filter>File di origine</Filter>
+    <ClCompile Include="LinearSys.cpp">
+      <Filter>File di risorse</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Circ.NET\MatrixNew\Matrix.cpp">
-      <Filter>File di origine</Filter>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>File di risorse</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Circ.NET\MatrixNew\MatrixDef.cpp">
-      <Filter>File di origine</Filter>
+    <ClCompile Include="MatrixDef.cpp">
+      <Filter>File di risorse</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Circ.NET\MatrixNew\MatrixIterator.cpp">
-      <Filter>File di origine</Filter>
+    <ClCompile Include="MatrixIterator.cpp">
+      <Filter>File di risorse</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Circ.NET\MatrixNew\MatrixNew.cpp">
-      <Filter>File di origine</Filter>
+    <ClCompile Include="MatrixNew.cpp">
+      <Filter>File di risorse</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Circ.NET\MatrixNew\Pippo.cpp">
-      <Filter>File di origine</Filter>
+    <ClCompile Include="Pippo.cpp">
+      <Filter>File di risorse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Circ.NET\MatrixNew\LinearSys.h">
-      <Filter>File di origine</Filter>
+    <ClInclude Include="LinearSys.h">
+      <Filter>File di risorse</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Circ.NET\MatrixNew\Matrix.h">
-      <Filter>File di origine</Filter>
+    <ClInclude Include="Matrix.h">
+      <Filter>File di risorse</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Circ.NET\MatrixNew\MatrixDef.h">
-      <Filter>File di origine</Filter>
+    <ClInclude Include="MatrixDef.h">
+      <Filter>File di risorse</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Circ.NET\MatrixNew\MatrixIterator.h">
-      <Filter>File di origine</Filter>
+    <ClInclude Include="MatrixIterator.h">
+      <Filter>File di risorse</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Circ.NET\MatrixNew\Pippo.h">
-      <Filter>File di origine</Filter>
+    <ClInclude Include="Pippo.h">
+      <Filter>File di risorse</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Circ.NET\MatrixNew\Requires.h">
-      <Filter>File di origine</Filter>
+    <ClInclude Include="Requires.h">
+      <Filter>File di risorse</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\Circ.NET\MatrixNew\MatrixNew.vcxproj">
-      <Filter>File di origine</Filter>
-    </None>
-    <None Include="..\..\..\Circ.NET\MatrixNew\MatrixNew.vcxproj.filters">
-      <Filter>File di origine</Filter>
-    </None>
-    <None Include="..\..\..\Circ.NET\MatrixNew\MatrixNew.vcxproj.user">
-      <Filter>File di origine</Filter>
-    </None>
   </ItemGroup>
 </Project>

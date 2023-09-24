@@ -18,6 +18,22 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LinearSys.cpp" />
+    <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="MatrixDef.cpp" />
+    <ClCompile Include="MatrixIterator.cpp" />
+    <ClCompile Include="MatrixNew.cpp" />
+    <ClCompile Include="Pippo.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LinearSys.h" />
+    <ClInclude Include="Matrix.h" />
+    <ClInclude Include="MatrixDef.h" />
+    <ClInclude Include="MatrixIterator.h" />
+    <ClInclude Include="Pippo.h" />
+    <ClInclude Include="Requires.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -129,27 +145,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\Circ.NET\MatrixNew\LinearSys.cpp" />
-    <ClCompile Include="..\..\..\Circ.NET\MatrixNew\Matrix.cpp" />
-    <ClCompile Include="..\..\..\Circ.NET\MatrixNew\MatrixDef.cpp" />
-    <ClCompile Include="..\..\..\Circ.NET\MatrixNew\MatrixIterator.cpp" />
-    <ClCompile Include="..\..\..\Circ.NET\MatrixNew\MatrixNew.cpp" />
-    <ClCompile Include="..\..\..\Circ.NET\MatrixNew\Pippo.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\Circ.NET\MatrixNew\LinearSys.h" />
-    <ClInclude Include="..\..\..\Circ.NET\MatrixNew\Matrix.h" />
-    <ClInclude Include="..\..\..\Circ.NET\MatrixNew\MatrixDef.h" />
-    <ClInclude Include="..\..\..\Circ.NET\MatrixNew\MatrixIterator.h" />
-    <ClInclude Include="..\..\..\Circ.NET\MatrixNew\Pippo.h" />
-    <ClInclude Include="..\..\..\Circ.NET\MatrixNew\Requires.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\Circ.NET\MatrixNew\MatrixNew.vcxproj" />
-    <None Include="..\..\..\Circ.NET\MatrixNew\MatrixNew.vcxproj.filters" />
-    <None Include="..\..\..\Circ.NET\MatrixNew\MatrixNew.vcxproj.user" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
