@@ -185,8 +185,7 @@ int main()
 			}
 		// Float 80 bit non supportato: long double => double in MS C++
 		// __float128 bit forse supportato
-		
-		
+			
 
 		cout << "\npr2=\n" << pr2.to_string() << endl;
 		cout << "\npr3=\n" << pr3.to_string() << endl;
@@ -219,7 +218,11 @@ int main()
 
 		cout << "\nId\n" << bak.to_string() << endl;
 
-		LinearSys<complex<double>, double> *ls = new LinearSys<complex<double>,double>();
+		LinearSys<float, float> *ls1 = new LinearSys<float, float>();
+		LinearSys<double, double> *ls2 = new LinearSys<double, double>();
+		LinearSys<complex<float>, float> *ls3 = new LinearSys<complex<float>, float>();
+		LinearSys<complex<double>, double> *ls4 = new LinearSys<complex<double>, double>();
+
 		// LinearSys<float,string> *ls2 = new LinearSys<float, string>();	// Error C7500: nessuna funzione soddisfa i vincoli
 
 		}

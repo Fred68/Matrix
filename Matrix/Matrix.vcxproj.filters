@@ -27,7 +27,7 @@
     <ClCompile Include="MatrixIterator.cpp">
       <Filter>File di risorse</Filter>
     </ClCompile>
-    <ClCompile Include="MatrixNew.cpp">
+    <ClCompile Include="MatrixTest.cpp">
       <Filter>File di risorse</Filter>
     </ClCompile>
     <ClCompile Include="Pippo.cpp">
