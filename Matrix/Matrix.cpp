@@ -765,7 +765,6 @@ template <class DATA> Matrix<DATA> &Matrix<DATA>::operator*(const Matrix <DATA> 
 			for (ir = 0; ir < _row; ir++)
 				for (ic = 0; ic < m._col; ic++)
 					{
-					#pragma message ("DA VEDERE SE FUNZIONA CON COMPLEX...")
 					sum = (DATA) 0;
 					for (cc = 0; cc < _col; cc++)		// Ciclo per sommatoria
 						{
@@ -809,7 +808,6 @@ template <class DATA> Matrix<DATA> &Matrix<DATA>::operator*=(const Matrix <DATA>
 			for (ir = 0; ir < _row; ir++)
 				for (ic = 0; ic < m._col; ic++)
 					{
-					#pragma message ("DA VEDERE SE FUNZIONA CON COMPLEX...")
 					sum = (DATA)0;
 					for (cc = 0; cc < _col; cc++)		// Ciclo per sommatoria
 						{
@@ -854,7 +852,6 @@ template <class DATA> DATA &Matrix<DATA>::operator^(const Matrix <DATA> &m) requ
 		throw std::runtime_error(MatrixDef::ERR_NOTVECTOR);
 		}
 	DATA *tmp = new DATA;
-	#pragma message ("DA VEDERE SE FUNZIONA CON COMPLEX...")
 	*tmp = (DATA) 0;
 	int ir, ic;
 	for(ir=0; ir<_row; ir++)
