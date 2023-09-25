@@ -14,9 +14,13 @@ class Pippo
 	{
 	protected:
 		int _p = -1;
+		double _p2;
+		int _in[3] = {1,2,3};
 	public:
 		Pippo()
-			{ _p = 0;
+			{
+			_p = 0;
+			_p2 = (double)_p / 2.0;
 			#ifdef _DEBUG
 			cout << "ctor Pippo()" << endl;
 			#endif

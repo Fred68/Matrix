@@ -55,7 +55,9 @@ int main()
 		cout << "x:\t" << x << endl;
 
 		(*P2)(1, 0) = Pippo(-8);
-		cout << "P2:\n" << P2->to_string() << "\tRighe: " << P2->rows() << "\tColonne: " << P2->cols() << endl;
+		cout << "P2:\n" << P2 << "\tRighe: " << P2->rows() << "\tColonne: " << P2->cols() << endl;
+		cout << "P2:\n" << P2->to_string(MatrixDef::Cmd::size) << endl;
+		cout << "P2:\n" << P2->to_string(MatrixDef::Cmd::detail) << endl;
 
 		Matrix<Pippo> P2n, P2o;
 		P2o = P2n = (*P2);
@@ -92,8 +94,10 @@ int main()
 		cout << "J1:\n" << J1.to_string(',', ';') << endl;
 
 		J1.dim(4, 3);
+		
 		Matrix<int> J2(J1);
-		cout << "J2:\t" << J1.to_string(MatrixDef::CMD_SZ) << endl;
+		cout << "[J2:]\t" << J2.to_string(MatrixDef::Cmd::detail) << endl;
+		
 		J1(2, 1) = 3;
 		J1(3, 2) = -99;
 		J1.dim(10, 10);
@@ -169,16 +173,17 @@ int main()
 		Matrix<int> pr6 = 2 * pr1;
 
 		Matrix<long double> ld1(2,2,1.0001l);
+		cout << "[ld1:]\t" << ld1.to_string(MatrixDef::Cmd::detail) << endl;
 
 		Matrix<complex<double>> cp0(2,2,cpxrc);
 		
 		Matrix<float> a(1,3, ramdomfloat10), b(1,3, ramdomfloat10);
 		
-		cout << "\npr1=\n" << pr1.to_string() << endl;
+		
 
 			{
 			MatrixIterator<int> it(pr1);
-			
+			cout << "\npr1=\n" << pr1.to_string(MatrixDef::Cmd::detail) << endl;
 			for (int *x = it.begin(); x != nullptr; x = it.next())
 				{
 				cout << *x << " " << *it.peek() << '\t';
@@ -220,14 +225,17 @@ int main()
 		cout << "\nId\n" << idm.to_string() << endl;
 
 		Matrix<float> mset;
-		float arrcost[2][2] = {{1.1,2},{3.0,4}};
-		mset.set(2,2, *arrcost);
+		float arrcost[3][2] = {{1.1,2},{3.0,4},{-1.0,-2.0}};
+		mset.set(3,2, *arrcost);
 		cout << "\nmset.to_string:\n" << mset.to_string() << endl;
 
 		Matrix<float> mset1;
 		// mset1.set(2, 2,{{10,20},{-3,-4}});
-		mset1.set(2, 2, { 10,20,-3,-4 });
-		cout << "\nmset.to_string:\n" << mset1.to_string() << endl;
+		mset1.set(2, 2, {	10,20,
+											-3,-4
+											/*, 5 errore sizes do not match */
+										});
+		cout << "\nmset1.to_string:\n" << mset1.to_string() << endl;
 
 
 		LinearSys<float, float> *ls1 = new LinearSys<float, float>();

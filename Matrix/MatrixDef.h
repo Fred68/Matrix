@@ -18,7 +18,7 @@ namespace matrix
 class MatrixDef
     {
 	public:
-		static const int CMD_SZ = 1;
+		enum class Cmd	{size, detail};
 		static const string ERR_ALLOC;
 		static const string ERR_OUTOFBOUND;
 		static const string ERR_WRONGPARAM;

@@ -146,76 +146,95 @@ template <class DATA> Matrix<DATA>::Matrix(const Matrix& m) requires RQassign<DA
 
 	}
 
-/* set from array */
+/* set from array () */
 template <class DATA> void Matrix<DATA>::set(int rows, int cols, DATA *d) requires RQassign<DATA>
 	{
-	
 
 	#ifdef _DEBUG
-	cout << endl << "-----------------------------------" << endl;
-	int righe, colonne;
-	righe = sizeof(d);
-	colonne = sizeof(*d);
-	cout << "righe, colonne=" << righe << ',' << colonne << " RIVEDERE I CALCOLI !" << endl;
-	
+	//cout << endl << "-----------------------------------" << endl;
+	//int a, b, c = 0;
+	//a = sizeof(d);
+	//b = sizeof(*d);
+	////c = sizeof(d[0]);
+	//cout << "sizeof(d)=" << a << endl;
+	//cout << "sizeof(*d)=" << b << endl;
+	//cout << "datasize=" << _datasize << endl;
+	//cout << "rows=" << a/_datasize << endl;
+	//cout << "sizeof(d[0])=" << c << endl;
+	//cout << "-----------------------------------" << endl;
 	#endif
-	if ((rows > 0) && (cols > 0))
-		{ 
-		_row = rows;
-		_col = cols;
-		dat = new DATA[rows * cols];
-		if (!dat)							// Se fallita allocazione, esce con errore
-			{
-			_row = _col = 0;
-			throw std::runtime_error(MatrixDef::ERR_ALLOC);
-			}
-		else
-			{
-			int ir, ic;
-			for (ir = 0; ir < _row; ir++)
-				for (ic = 0; ic < _col; ic++)
-					dat[ir * _col + ic] = d[ir * _col + ic];
-			}
+
+	DATA *datnew;							// Puntatore ai nuovi dati
+	if ((rows < 0) || (cols < 0))			// Verifica le nuove dimensioni
+		{
+		throw std::runtime_error(MatrixDef::ERR_OUTOFBOUND);
 		}
-	else
-		{									// Matrice vuota
-		_row = _col = 0;
+	if ((rows == 0) || (cols == 0))			// Se una dimensione è nulla
+		{
+		if (dat) delete[] dat;				// Dealloca la vecchia matrice
+		_row = _col = 0;					// e azzera
 		dat = (DATA*)nullptr;
+		return;
 		}
+	/*
+	if (array.size() != rows * cols)
+		{
+		throw std::runtime_error(MatrixDef::ERR_SZMISMATCH);
+		}
+	*/
+	datnew = new DATA[rows * cols];			// Alloca nuova matrice
+	if (!datnew)							// Verifica allocazione avvenuta
+		{
+		throw std::runtime_error(MatrixDef::ERR_ALLOC);
+		}
+	int ir, ic;								// Ricopia i valori dal vettore alla matrice
+	for (ir = 0; ir < rows; ir++)
+		for (ic = 0; ic < cols; ic++)
+			datnew[ir * cols + ic] = d[ir * cols + ic];
+	if (dat) delete[] dat;					// Dealloca la vecchia matrice
+	_row = rows;							// Imposta i nuovi indici
+	_col = cols;
+	dat = datnew;							// Imposta il nuovo puntatore
+
 	#ifdef _DEBUG
-	cout << "Matrix::set(int rows, int cols, DATA *d)" << endl;
+	cout << "void Matrix::set(int rows, int cols, DATA *d). ---> No array boundary check !" << endl;
 	#endif
 	return;
 	}
-
 template <class DATA> void Matrix<DATA>::set(int rows, int cols, const std::vector<DATA>& array) requires RQassign<DATA>
 	{
-	if ((rows > 0) && (cols > 0))
+	DATA *datnew;							// Puntatore ai nuovi dati
+	if ((rows < 0) || (cols < 0))			// Verifica le nuove dimensioni
 		{
-		_row = rows;
-		_col = cols;
-		dat = new DATA[rows * cols];
-		if (!dat)							// Se fallita allocazione, esce con errore
-			{
-			_row = _col = 0;
-			throw std::runtime_error(MatrixDef::ERR_ALLOC);
-			}
-		else
-			{
-			int ir, ic;
-			for (ir = 0; ir < _row; ir++)
-				for (ic = 0; ic < _col; ic++)
-					dat[ir * _col + ic] = array[ir * _col + ic];
-			}
+		throw std::runtime_error(MatrixDef::ERR_OUTOFBOUND);
 		}
-	else
-		{									// Matrice vuota
-		_row = _col = 0;
+	if ((rows == 0) || (cols == 0))			// Se una dimensione è nulla
+		{
+		if (dat) delete[] dat;				// Dealloca la vecchia matrice
+		_row = _col = 0;					// e azzera
 		dat = (DATA*)nullptr;
+		return;
 		}
+	if (array.size() != rows * cols)
+		{
+		throw std::runtime_error(MatrixDef::ERR_SZMISMATCH);
+		}
+	datnew = new DATA[rows * cols];			// Alloca nuova matrice
+	if (!datnew)							// Verifica allocazione avvenuta
+		{
+		throw std::runtime_error(MatrixDef::ERR_ALLOC);
+		}
+	int ir, ic;								// Ricopia i valori dal vettore alla matrice
+	for (ir = 0; ir < rows; ir++)
+		for (ic = 0; ic < cols; ic++)
+			datnew[ir * cols + ic] = array[ir * cols + ic];
+	if (dat) delete[] dat;					// Dealloca la vecchia matrice
+	_row = rows;							// Imposta i nuovi indici
+	_col = cols;
+	dat = datnew;							// Imposta il nuovo puntatore
 	
 	#ifdef _DEBUG
-	cout << "void set(int rows, int cols, const std::vector<DATA>& array)" << endl;
+	cout << "void Matrix::set(int rows, int cols, const std::vector<DATA>& array)" << endl;
 	#endif
 	return;
 	}
@@ -337,14 +356,17 @@ template <class DATA> string Matrix<DATA>::to_string(char col_sep, char row_sep)
 	}
 
 /* ToString() */
-template <class DATA> string Matrix<DATA>::to_string(int cmd)
+template <class DATA> string Matrix<DATA>::to_string(MatrixDef::Cmd cmd)
 	{
 	std::stringstream ss;
 	switch (cmd)
 		{
-		case MatrixDef::CMD_SZ:
-			ss << "R" << _row << " x C" << _col;
+		case MatrixDef::Cmd::size:
+			ss << "R" << _row << " x C" << _col ;
 			break;
+		case MatrixDef::Cmd::detail:
+			ss << "R" << _row << "xC" << _col << ",iters=" << _iterators << ",dtsz=" << _datasize << ",empty=" << *_empty;
+		break;
 		default:
 			break;
 		}
@@ -1017,8 +1039,8 @@ template <class DATA> const Matrix<DATA> &Matrix<DATA>::Id(int sz) requires RQsu
 	return *tmp;
 	}
 
-/* Inizializza membro statico */
-template <class DATA> DATA *Matrix<DATA>::_empty = new DATA;		// Costruttore di default di DATA. Deallocato a fine programma.
-
+/* Inizializza membri statici */
+template <class DATA> DATA *Matrix<DATA>::_empty = new DATA;			// Costruttore di default di DATA. Deallocato a fine programma.
+template <class DATA> size_t Matrix<DATA>::_datasize = sizeof(*_empty);	// Dimensione di DATA
 
 #endif

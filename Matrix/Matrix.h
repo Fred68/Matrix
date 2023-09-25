@@ -54,6 +54,7 @@ template<class DATA> class Matrix
 		DATA *dat;							// Puntatore ai dati
 		static DATA *_empty;				// Dato vuoto
 		int _iterators;						// Numero di iteratori
+		static size_t _datasize;			// DATA size
 
 	public:
 		Matrix();
@@ -78,8 +79,6 @@ template<class DATA> class Matrix
 			cout << "~Matrix()" << endl;
 			#endif
 			}
-
-		
 
 
 		// Accesso in lettura
@@ -127,7 +126,7 @@ template<class DATA> class Matrix
 
 		// To String() 	Operazioni su stream generano link error con: friend ostream &operator<<(ostream &stream, const Matrix &m);	
 		string to_string(char col_sep = '\t', char row_sep = '\n');
-		string to_string(int cmd);
+		string to_string(MatrixDef::Cmd cmd);
 		
 		// Modifica dimensioni
 		bool dim(int rows, int cols) requires RQassign<DATA>;
