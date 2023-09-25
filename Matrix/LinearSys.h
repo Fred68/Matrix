@@ -23,22 +23,26 @@ namespace matrix
 template <class DATA, class MOD> class LinearSys
 	{
 	private:
-		Matrix<DATA> A;				// Matrice fattorizzata
+		Matrix<DATA> a;				// Matrice fattorizzata
 		Matrix<int> pivot;			// Vettore di pivot
 		const MOD EPS = std::numeric_limits<MOD>::epsilon();
 		const MOD MIN = std::numeric_limits<MOD>::min();
 		const MOD MAX = std::numeric_limits<MOD>::max();
-		MOD _epszero;				// Valore minimo considerato > 0			
+		MOD _epszero;				// Valore minimo considerato > 0
+		MOD _det;					// Determinante
 	public:
 
-		/* Ctor */
+		/* Ctor. Vincolo nel costruttore, non serve altrove */
 		LinearSys() requires RQfloatabs<DATA,MOD>
 			{
 			_epszero = EPS;
+			_det = (MOD) 0;
 			#ifdef _DEBUG		
 			cout << "LinearSys(): epsilon=" << EPS << ", min=" << MIN << ", max=" << MAX << endl;
 			#endif
 			}
+
+		/* Soglia sotto la quale un valore si considera nullo */
 		void set_eps_zero(MOD eps_zero)
 			{
 			if(eps_zero > EPS)
@@ -57,16 +61,21 @@ template <class DATA, class MOD> class LinearSys
 			{
 			return _epszero;
 			}
+
+		/* to_string() */
 		string to_string()
 			{
 			stringstream ss;
 			ss << "Eps_zero=" << _epszero;
 			return ss.str();
 			}
+
+		/* Fattorizzazione LU con pivoting parziale. Monegato Metodi e algoritmi per il calcolo numerico CLUT 2008, pag. 41 e succ. */
+		bool Factor(Matrix <DATA> &A);
 	};
 
 
-// #include "LinearSys.cpp" per ora superfluo
+#include "LinearSys.cpp"
 
 }
 

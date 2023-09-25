@@ -17,3 +17,4 @@ const string MatrixDef::ERR_WRONGPARAM = "Wrong parameter";
 const string MatrixDef::ERR_SZMISMATCH = "Sizes do not match";
 const string MatrixDef::ERR_NOTVECTOR = "Not a vector";
 const string MatrixDef::ERR_ZEROSIZE = "Zero size";
+const string MatrixDef::ERR_NOTSQUARE = "Not square";

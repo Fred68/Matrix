@@ -19,7 +19,9 @@
 #include <sstream>
 #include <complex>
 #include <limits>
+#include <vector>
 // #include <type_traits>	// Per complex
+
 
 using std::swap;
 using std::string;
@@ -27,6 +29,7 @@ using std::runtime_error;
 using std::pair;
 using std::is_floating_point;
 using std::numeric_limits;
+using std::vector;
 
 #ifdef _DEBUG
 using std::cout;
@@ -75,18 +78,9 @@ template<class DATA> class Matrix
 			cout << "~Matrix()" << endl;
 			#endif
 			}
-		void clear()
-			{
-			if (dat != (DATA*)nullptr)
-				{
-				delete[] dat;
-				dat = (DATA*)nullptr;
-				}
-			_col = _row = 0;
-			#ifdef _DEBUG
-			cout << "Clear()" << endl;
-			#endif
-			}
+
+		
+
 
 		// Accesso in lettura
 		int rows() { return _row; }
@@ -108,9 +102,25 @@ template<class DATA> class Matrix
 		Matrix<DATA> &get_col(int icol) requires RQassign<DATA>;
 		Matrix<DATA> &get_sub(int row_ini, int col_ini, int n_row, int n_col) requires RQassign<DATA>;
 
+		// Set
+		void clear()
+			{
+			if (dat != (DATA*)nullptr)
+				{
+				delete[] dat;
+				dat = (DATA*)nullptr;
+				}
+			_col = _row = 0;
+			#ifdef _DEBUG
+			cout << "Clear()" << endl;
+			#endif
+			}
+		void set(int rows, int cols, DATA *d) requires RQassign<DATA>;
+		void set(int rows, int cols, const std::vector<DATA>& array) requires RQassign<DATA>;
+			
 		// Assegnazione
 		Matrix<DATA> &operator=(const Matrix<DATA> &m) requires RQassign<DATA>;
-
+		
 		// Trasposta
 		Matrix<DATA> &operator!() requires RQassign<DATA>;		// Trasposta (forma prefissa: B = !A)
 		void transpose() requires RQassign<DATA>;				// Traspone

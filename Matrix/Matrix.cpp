@@ -146,6 +146,81 @@ template <class DATA> Matrix<DATA>::Matrix(const Matrix& m) requires RQassign<DA
 
 	}
 
+/* set from array */
+template <class DATA> void Matrix<DATA>::set(int rows, int cols, DATA *d) requires RQassign<DATA>
+	{
+	
+
+	#ifdef _DEBUG
+	cout << endl << "-----------------------------------" << endl;
+	int righe, colonne;
+	righe = sizeof(d);
+	colonne = sizeof(*d);
+	cout << "righe, colonne=" << righe << ',' << colonne << " RIVEDERE I CALCOLI !" << endl;
+	
+	#endif
+	if ((rows > 0) && (cols > 0))
+		{ 
+		_row = rows;
+		_col = cols;
+		dat = new DATA[rows * cols];
+		if (!dat)							// Se fallita allocazione, esce con errore
+			{
+			_row = _col = 0;
+			throw std::runtime_error(MatrixDef::ERR_ALLOC);
+			}
+		else
+			{
+			int ir, ic;
+			for (ir = 0; ir < _row; ir++)
+				for (ic = 0; ic < _col; ic++)
+					dat[ir * _col + ic] = d[ir * _col + ic];
+			}
+		}
+	else
+		{									// Matrice vuota
+		_row = _col = 0;
+		dat = (DATA*)nullptr;
+		}
+	#ifdef _DEBUG
+	cout << "Matrix::set(int rows, int cols, DATA *d)" << endl;
+	#endif
+	return;
+	}
+
+template <class DATA> void Matrix<DATA>::set(int rows, int cols, const std::vector<DATA>& array) requires RQassign<DATA>
+	{
+	if ((rows > 0) && (cols > 0))
+		{
+		_row = rows;
+		_col = cols;
+		dat = new DATA[rows * cols];
+		if (!dat)							// Se fallita allocazione, esce con errore
+			{
+			_row = _col = 0;
+			throw std::runtime_error(MatrixDef::ERR_ALLOC);
+			}
+		else
+			{
+			int ir, ic;
+			for (ir = 0; ir < _row; ir++)
+				for (ic = 0; ic < _col; ic++)
+					dat[ir * _col + ic] = array[ir * _col + ic];
+			}
+		}
+	else
+		{									// Matrice vuota
+		_row = _col = 0;
+		dat = (DATA*)nullptr;
+		}
+	
+	#ifdef _DEBUG
+	cout << "void set(int rows, int cols, const std::vector<DATA>& array)" << endl;
+	#endif
+	return;
+	}
+
+
 /* Operatore di assegnazione */
 template <class DATA> Matrix<DATA> &Matrix<DATA>::operator=(const Matrix<DATA> &m) requires RQassign<DATA>
 	{

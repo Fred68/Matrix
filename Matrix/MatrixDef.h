@@ -25,6 +25,7 @@ class MatrixDef
 		static const string ERR_SZMISMATCH;
 		static const string ERR_NOTVECTOR;
 		static const string ERR_ZEROSIZE;
+		static const string ERR_NOTSQUARE;
     };
 
 }

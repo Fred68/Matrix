@@ -31,6 +31,7 @@ static int ramdomint(int i, int j);
 static int ramdomint10(int i, int j);
 static std::complex<double> cpxrc(int r, int c);
 static float ramdomfloat10(int i, int j);
+static double ramdomdouble20(int i, int j);
 
 int main()
 	{
@@ -218,15 +219,31 @@ int main()
 
 		cout << "\nId\n" << idm.to_string() << endl;
 
+		Matrix<float> mset;
+		float arrcost[2][2] = {{1.1,2},{3.0,4}};
+		mset.set(2,2, *arrcost);
+		cout << "\nmset.to_string:\n" << mset.to_string() << endl;
+
+		Matrix<float> mset1;
+		// mset1.set(2, 2,{{10,20},{-3,-4}});
+		mset1.set(2, 2, { 10,20,-3,-4 });
+		cout << "\nmset.to_string:\n" << mset1.to_string() << endl;
+
+
 		LinearSys<float, float> *ls1 = new LinearSys<float, float>();
 		LinearSys<double, double> *ls2 = new LinearSys<double, double>();
 		LinearSys<complex<float>, float> *ls3 = new LinearSys<complex<float>, float>();
 		LinearSys<complex<double>, double> *ls4 = new LinearSys<complex<double>, double>();
 		ls4->set_eps_zero_ratio(10);
+		cout << "\nls1->to_string:\n" << ls1->to_string() << endl;
+		cout << "\nls2->to_string:\n" << ls2->to_string() << endl;
+		cout << "\nls3->to_string:\n" << ls3->to_string() << endl;
 		cout << "\nls4->to_string:\n" << ls4->to_string() << endl;
 		
 		// LinearSys<float,string> *ls2 = new LinearSys<float, string>();	// Error C7500: nessuna funzione soddisfa i vincoli
-
+		Matrix<double> A(3,3,ramdomdouble20);
+		cout << "A:\n" << A.to_string() << endl;
+		ls2->Factor(A);
 		}
 	catch (const std::runtime_error ex)
 		{
@@ -253,6 +270,11 @@ static int ramdomint10(int i, int j)
 static float ramdomfloat10(int i, int j)
 	{
 	return (float) ((rand() % 10) - (rand() % 5));
+	}
+
+static double ramdomdouble20(int i, int j)
+	{
+	return (double)((rand() % 20) - (rand() % 10));
 	}
 
 static std::complex<double> cpxrc(int r, int c)
