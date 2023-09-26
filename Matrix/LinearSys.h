@@ -10,12 +10,12 @@
 
 #ifdef _DEBUG
 using std::cout;
-using std::endl;
 using std::ostream;
 #endif
 
 using std::string;
 using std::stringstream;
+using std::endl;
 
 namespace matrix
 {
@@ -66,11 +66,15 @@ template <class DATA, class MOD> class LinearSys
 		string to_string()
 			{
 			stringstream ss;
-			ss << "Eps_zero=" << _epszero;
+			ss << "Eps_zero=" << _epszero << endl;
+			ss << "Det=" << _det << endl;
+			ss << a.to_string() << endl;
 			return ss.str();
 			}
 
-		/* Fattorizzazione LU con pivoting parziale. Monegato Metodi e algoritmi per il calcolo numerico CLUT 2008, pag. 41 e succ. */
+		/* Fattorizzazione LU con pivoting parziale.
+		Monegato Metodi e algoritmi per il calcolo numerico CLUT 2008,
+		pag. 41 e succ.*/
 		bool Factor(Matrix <DATA> &A);
 	};
 

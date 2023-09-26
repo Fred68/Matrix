@@ -233,10 +233,10 @@ int main()
 		// mset1.set(2, 2,{{10,20},{-3,-4}});
 		mset1.set(2, 2, {	10,20,
 											-3,-4
-											/*, 5 errore sizes do not match */
 										});
 		cout << "\nmset1.to_string:\n" << mset1.to_string() << endl;
 
+		// mset1.set(2, 2, { 10,20,-3,-4,5});	// Error, sizes do not match
 
 		LinearSys<float, float> *ls1 = new LinearSys<float, float>();
 		LinearSys<double, double> *ls2 = new LinearSys<double, double>();
@@ -249,9 +249,25 @@ int main()
 		cout << "\nls4->to_string:\n" << ls4->to_string() << endl;
 		
 		// LinearSys<float,string> *ls2 = new LinearSys<float, string>();	// Error C7500: nessuna funzione soddisfa i vincoli
-		Matrix<double> A(3,3,ramdomdouble20);
+		
+		//Matrix<double> A(3,3,ramdomdouble20);
+		Matrix<double> A;
+		A.set(3,3,	{	1, 2, 3,
+									-2, 4, -7,
+									5, 6, 1 });
 		cout << "A:\n" << A.to_string() << endl;
 		ls2->Factor(A);
+		/*	Verifica con GNU Octave
+		A = [1 2 3; -2 4 -7; 5 6 1]
+		[L,U]=lu(A)
+		L =	0.2000   0.1250   1.0000
+			-0.4000   1.0000        0
+			1.0000        0        0
+		U =	5.0000   6.0000   1.0000
+			0   6.4000  -6.6000
+			0        0   3.6250
+		*/
+		cout << "ls2=" << ls2->to_string() << endl;
 		}
 	catch (const std::runtime_error ex)
 		{

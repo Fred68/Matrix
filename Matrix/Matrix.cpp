@@ -55,6 +55,7 @@ template <class DATA> Matrix<DATA>::Matrix(int rows, int cols)
 	}
 template <class DATA> Matrix<DATA>::Matrix(int rows, int cols, DATA d) requires RQassign<DATA>
 	{
+	#pragma warning (disable : 6385)
 	if ((rows > 0) && (cols > 0))
 		{
 		_row = rows;
@@ -82,6 +83,7 @@ template <class DATA> Matrix<DATA>::Matrix(int rows, int cols, DATA d) requires 
 	#ifdef _DEBUG
 	cout << "Matrix(int rows, int cols, DATA d)" << endl;
 	#endif
+	#pragma warning (default : 6385)
 	}
 template <class DATA> Matrix<DATA>::Matrix(int rows, int cols, DATA(*pf)(int r, int c)) requires RQassign<DATA>
 	{

@@ -59,20 +59,17 @@ template <class DATA, class MOD> bool LinearSys<DATA, MOD>::Factor(Matrix <DATA>
 				}
 			_det = -_det;							// ...e cambia segno al determinante.
 			}
-		#pragma message("CONTROLLARE DA QUI IN POI")
 		for (i = k + 1; i < n; i++)				// Ciclo 2, per tutte le righe successive alla riga k attuale
 			{
-			a(i, k) = -a(i, k) / a(k, k);		// Coefficiente per metodo di Gauss (per la riga i
-			for (j = k + 1; j < n; j++)
+			a(i, k) = -a(i, k) / a(k, k);		// Coefficiente per metodo di Gauss (su riga i, colonna k), sotto diagonale.
+			for (j = k + 1; j < n; j++)			// Combina linearmente le due righe, sopra la diagonale 
 				{
 				a(i, j) = a(i, j) + a(i, k) * a(k, j);
 				}
 			}								// Fine ciclo 2
 		_det = _det * a(k, k);
-		#pragma message("COMPLETARE")
 		}
-
-
+	_det = _det * a(n - 1, n - 1);
 	return true;
 	}
 
