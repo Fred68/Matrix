@@ -256,7 +256,7 @@ int main()
 									-2, 4, -7,
 									5, 6, 1 });
 		cout << "A:\n" << A.to_string() << endl;
-		ls2->Factor(A);
+		ls2->factor(A);
 		/*	Verifica con GNU Octave
 		A = [1 2 3; -2 4 -7; 5 6 1]
 		[L,U]=lu(A)
@@ -267,7 +267,14 @@ int main()
 			0   6.4000  -6.6000
 			0        0   3.6250
 		*/
-		cout << "ls2=" << ls2->to_string() << endl;
+		Matrix<double> xx;
+		Matrix<double> bb;
+		bb.set(3,1,{5, 3, 10});
+		cout << "ls2=\n" << ls2->to_string() << endl;
+		if(ls2->solve_check(false))
+			{
+			ls2->solve(xx, bb);
+			}
 		}
 	catch (const std::runtime_error ex)
 		{

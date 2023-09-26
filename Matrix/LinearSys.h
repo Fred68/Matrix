@@ -68,14 +68,40 @@ template <class DATA, class MOD> class LinearSys
 			stringstream ss;
 			ss << "Eps_zero=" << _epszero << endl;
 			ss << "Det=" << _det << endl;
-			ss << a.to_string() << endl;
+			ss << "PLU=" << a.to_string() << endl;
+			ss << "Pivot=" << pivot.to_string() << endl;
 			return ss.str();
 			}
 
-		/* Fattorizzazione LU con pivoting parziale.
-		Monegato Metodi e algoritmi per il calcolo numerico CLUT 2008,
-		pag. 41 e succ.*/
-		bool Factor(Matrix <DATA> &A);
+		/* Fattorizzazione LU con pivoting parziale e soluzione. Monegato Metodi e algoritmi... CLUT 2008, pag. 41 e succ.*/
+		bool factor(const Matrix <DATA> &A);
+		bool solve_check(bool throw_exception = true)
+			{
+			bool ok = true;
+			int n = a.rows();
+			if (n != a.cols())
+				{
+				ok = false;
+				if(throw_exception)		throw std::runtime_error(MatrixDef::ERR_NOTSQUARE);
+				}
+			if (n < 1)
+				{
+				ok = false;
+				if (throw_exception)	throw std::runtime_error(MatrixDef::ERR_ZEROSIZE);
+				}
+			if (_det < _epszero)
+				{
+				ok = false;
+				if (throw_exception)	throw std::runtime_error(MatrixDef::ERR_SINGULAR);
+				}
+			if ((pivot.rows() != n - 1) || (pivot.cols() != 1))
+				{
+				ok = false;
+				if (throw_exception)	throw std::runtime_error(MatrixDef::ERR_PIVOT);
+				}
+			return ok;
+			}
+		bool solve(Matrix <DATA> &x, const Matrix <DATA> &b);
 	};
 
 

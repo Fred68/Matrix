@@ -161,7 +161,7 @@ template<class DATA> class Matrix
 		// Prodotto con scalare (T * Matrix<T> e Matrix<T> * T) e divisione (solo Matrix<T> / T).
 		Matrix <DATA> &operator*(const DATA &x) requires RQsumdifprod<DATA>;			// Prodotto per numero
 		friend Matrix<DATA> &operator*(const DATA &sx, const Matrix <DATA> &dx) requires RQsumdifprod<DATA>
-			{																// Inline, per evitare errore linker
+			{	{															// Inline, per evitare errore linker
 			Matrix<DATA> *tmp = new Matrix<DATA>();							// Alloca nuova Matrix vuota
 			int ir, ic;
 			if ((dx._row > 0) && (dx._col > 0))
@@ -193,7 +193,7 @@ template<class DATA> class Matrix
 			}
 		Matrix <DATA> &operator/(const DATA &x) requires RQsumdifprod<DATA>;			// Divisione
 
-		// Speciali
+		// Speciali 
 		static const Matrix <DATA> &Id(int sz) requires RQsumdifprod<DATA>;
 
 		// Friend Iterator

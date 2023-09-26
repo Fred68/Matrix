@@ -8,12 +8,12 @@
 
 using namespace matrix;
 
-template <class DATA, class MOD> bool LinearSys<DATA, MOD>::Factor(Matrix <DATA> &A)
+template <class DATA, class MOD> bool LinearSys<DATA, MOD>::factor(const Matrix <DATA> &A)
 	{
 	int n = A.rows();
 	if (n != A.cols())
 		{
-		throw std::runtime_error(MatrixDef::ERR_NOTSQUARE);
+		throw std::runtime_error(MatrixDef::ERR_NOTSQUARE); 
 		}
 	if (n < 1)
 		{
@@ -73,6 +73,50 @@ template <class DATA, class MOD> bool LinearSys<DATA, MOD>::Factor(Matrix <DATA>
 	return true;
 	}
 
+template <class DATA, class MOD> bool LinearSys<DATA, MOD>::solve(Matrix <DATA> &x, const Matrix <DATA> &b)
+	{
+	int n = a.rows();
+	solve_check();
+	if ((b.rows() != n) || (b.cols() != 1))		// Verifica dimensioni vettore termini noti
+		{
+		throw std::runtime_error(MatrixDef::ERR_SZMISMATCH);
+		}
+	x = b;
+	if (n == 1)
+		{
+		if (abs(a(0, 0)) < _epszero)
+			{
+			throw std::runtime_error(MatrixDef::ERR_SINGULAR);
+			}
+		x(0,0) = x(0,0) / a(0,0);
+		return true;
+		}
+	int k,j,i;
+	DATA tmp;
+
+	for (k = 0; k < n - 1; k++)			// Ciclo su tutte le righe, tranne l'ultima
+		{
+		j = pivot(k,0);		// Ottiene la riga da scambiare con le riga k
+		if (j != k)						// Le scambia, se necessario
+			{
+			tmp = x(j,0);
+			x(j,0) = x(k,0);
+			x(k, 0) = tmp;
+			}
+		for(i=k+1; i<n; i++)
+			{
+			x(i, 0) = (i, 0) + a(i, k) * x(k, 0);	// Non usa l'operatore+=, nel caso in cui sia definito solo l'operatore +
+			}
+		}
+	x(n-1, 0) = x(n-1, 0) / a(n-1, n-1);
+	for (i = n - 2; i >= 0; i--)
+		{
+		for (tmp = (DATA)0.0, j = i + 1; j < n; j++)
+			tmp = tmp + a(i, j) * x(j, 0);	// Non usa l'operatore+=, nel caso in cui sia definito solo l'operatore +
+		x(i, 0) = (x(i, 0) - tmp) / a(i, i);
+		}
+	return true;
+	}
 
 
 

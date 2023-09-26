@@ -26,6 +26,8 @@ class MatrixDef
 		static const string ERR_NOTVECTOR;
 		static const string ERR_ZEROSIZE;
 		static const string ERR_NOTSQUARE;
+		static const string ERR_SINGULAR;
+		static const string ERR_PIVOT;
     };
 
 }
