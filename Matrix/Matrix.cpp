@@ -611,8 +611,8 @@ template <class DATA> bool Matrix<DATA>::rem_col(int icol) requires RQassign<DAT
 	dat = datnew;
 	#ifdef _DEBUG
 	cout << "Matrix::rem_col(int icol)" << endl;
-	return true;
 	#endif
+	return true;
 	}
 
 /* Estrae una riga */

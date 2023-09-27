@@ -225,14 +225,14 @@ int main()
 		cout << "\nId\n" << idm.to_string() << endl;
 
 		Matrix<float> mset;
-		float arrcost[3][2] = {{1.1,2},{3.0,4},{-1.0,-2.0}};
+		float arrcost[3][2] = {{1.1f,2.0f},{3.0f,4.0f},{-1.0f,-2.0f}};
 		mset.set(3,2, *arrcost);
 		cout << "\nmset.to_string:\n" << mset.to_string() << endl;
 
 		Matrix<float> mset1;
 		// mset1.set(2, 2,{{10,20},{-3,-4}});
-		mset1.set(2, 2, {	10,20,
-											-3,-4
+		mset1.set(2, 2, {	10.0f,20.0f,
+											-3.0f,-4.0f
 										});
 		cout << "\nmset1.to_string:\n" << mset1.to_string() << endl;
 
@@ -252,29 +252,64 @@ int main()
 		
 		//Matrix<double> A(3,3,ramdomdouble20);
 		Matrix<double> A;
-		A.set(3,3,	{	1, 2, 3,
+		/*A.set(3,3,	{	1, 2, 3,
 									-2, 4, -7,
-									5, 6, 1 });
+									5, 6, 1 });*/
+		A.set(4, 4, { 1, 2, 3, 4
+									-2, 4, -7, -3,
+									5, 6, 1, 0,
+									0, 10, -4, 0
+									});
 		cout << "A:\n" << A.to_string() << endl;
+		
 		ls2->factor(A);
+		
 		/*	Verifica con GNU Octave
-		A = [1 2 3; -2 4 -7; 5 6 1]
-		[L,U]=lu(A)
-		L =	0.2000   0.1250   1.0000
-			-0.4000   1.0000        0
-			1.0000        0        0
-		U =	5.0000   6.0000   1.0000
-			0   6.4000  -6.6000
-			0        0   3.6250
+		>> A = [1 2 3; -2 4 -7; 5 6 1]
+		A =		1   2   3
+				-2   4  -7
+				5   6   1
+		>> [L,U]=lu(A)
+		L =		0.2000	0.1250	1.0000
+				-0.4000	1.0000	0
+				1.0000	0		0
+		U =		5.0000	6.0000	1.0000
+				0	6.4000	-6.6000
+				0	0	3.6250
+		>> b=[5 3 10]'
+		b =		5
+				3
+				10
+		>> x=A\b
+		x =		-0.1552
+				1.6983
+				0.5862
+		>> A*x
+		ans =	5
+				3
+				10
 		*/
+		
 		Matrix<double> xx;
 		Matrix<double> bb;
-		bb.set(3,1,{5, 3, 10});
+		
+		//bb.set(3,1,{5, 3, 10});
+		bb.set(4, 1, { 0, 0, 0, 0 });
+		cout << "bb=\n" << bb.to_string() << endl;
+
 		cout << "ls2=\n" << ls2->to_string() << endl;
-		if(ls2->solve_check(false))
+
+		if(ls2->solve_check())
 			{
 			ls2->solve(xx, bb);
 			}
+		else
+			{
+			cout << "solve_check non superato" << endl;
+			}
+		cout << "xx=\n" << xx.to_string() << endl;
+		cout << "A*x=\n" << (A*xx).to_string() << endl;
+
 		}
 	catch (const std::runtime_error ex)
 		{

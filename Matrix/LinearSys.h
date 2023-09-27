@@ -20,6 +20,8 @@ using std::endl;
 namespace matrix
 {
 
+//template<class DATA> class Matrix;	// Prototyping superfluo
+
 template <class DATA, class MOD> class LinearSys
 	{
 	private:
@@ -74,7 +76,7 @@ template <class DATA, class MOD> class LinearSys
 			}
 
 		/* Fattorizzazione LU con pivoting parziale e soluzione. Monegato Metodi e algoritmi... CLUT 2008, pag. 41 e succ.*/
-		bool factor(const Matrix <DATA> &A);
+		bool factor(Matrix <DATA> &A);
 		bool solve_check(bool throw_exception = true)
 			{
 			bool ok = true;
@@ -89,7 +91,7 @@ template <class DATA, class MOD> class LinearSys
 				ok = false;
 				if (throw_exception)	throw std::runtime_error(MatrixDef::ERR_ZEROSIZE);
 				}
-			if (_det < _epszero)
+			if (abs(_det) < _epszero)
 				{
 				ok = false;
 				if (throw_exception)	throw std::runtime_error(MatrixDef::ERR_SINGULAR);
@@ -101,7 +103,7 @@ template <class DATA, class MOD> class LinearSys
 				}
 			return ok;
 			}
-		bool solve(Matrix <DATA> &x, const Matrix <DATA> &b);
+		bool solve(Matrix <DATA> &x, Matrix <DATA> &b);
 	};
 
 

@@ -8,9 +8,10 @@
 
 using namespace matrix;
 
-template <class DATA, class MOD> bool LinearSys<DATA, MOD>::factor(const Matrix <DATA> &A)
+template <class DATA, class MOD> bool LinearSys<DATA, MOD>::factor(Matrix <DATA> &A)
 	{
-	int n = A.rows();
+	int n;
+	n = A.rows();
 	if (n != A.cols())
 		{
 		throw std::runtime_error(MatrixDef::ERR_NOTSQUARE); 
@@ -69,11 +70,16 @@ template <class DATA, class MOD> bool LinearSys<DATA, MOD>::factor(const Matrix 
 			}								// Fine ciclo 2
 		_det = _det * a(k, k);
 		}
+	if(abs(a(n - 1, n - 1))<_epszero)
+		{
+		_det = (MOD) 0;
+		return false;
+		}
 	_det = _det * a(n - 1, n - 1);
 	return true;
 	}
 
-template <class DATA, class MOD> bool LinearSys<DATA, MOD>::solve(Matrix <DATA> &x, const Matrix <DATA> &b)
+template <class DATA, class MOD> bool LinearSys<DATA, MOD>::solve(Matrix <DATA> &x, Matrix <DATA> &b)
 	{
 	int n = a.rows();
 	solve_check();
@@ -105,14 +111,14 @@ template <class DATA, class MOD> bool LinearSys<DATA, MOD>::solve(Matrix <DATA> 
 			}
 		for(i=k+1; i<n; i++)
 			{
-			x(i, 0) = (i, 0) + a(i, k) * x(k, 0);	// Non usa l'operatore+=, nel caso in cui sia definito solo l'operatore +
+			x(i, 0) = x(i, 0) + a(i, k) * x(k, 0);	// Non usa l'operatore+=, nel caso in cui sia definito solo l'operatore +
 			}
 		}
 	x(n-1, 0) = x(n-1, 0) / a(n-1, n-1);
-	for (i = n - 2; i >= 0; i--)
+	for (i = n - 1; i >= 0; i--)
 		{
 		for (tmp = (DATA)0.0, j = i + 1; j < n; j++)
-			tmp = tmp + a(i, j) * x(j, 0);	// Non usa l'operatore+=, nel caso in cui sia definito solo l'operatore +
+			tmp = tmp + a(i, j) * x(j, 0);			// Non usa l'operatore+=, nel caso in cui sia definito solo l'operatore +
 		x(i, 0) = (x(i, 0) - tmp) / a(i, i);
 		}
 	return true;
