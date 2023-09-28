@@ -51,8 +51,8 @@ int main()
 		(*P2)(0, 1) = Pippo(1);
 		(*P2)(1, 2) = Pippo(-5);
 
-		Pippo x = (*P2)(1, 2);
-		cout << "x:\t" << x << endl;
+		Pippo xpip = (*P2)(1, 2);
+		cout << "xpip:\t" << xpip << endl;
 
 		(*P2)(1, 0) = Pippo(-8);
 		cout << "P2:\n" << P2 << "\tRighe: " << P2->rows() << "\tColonne: " << P2->cols() << endl;
@@ -177,7 +177,7 @@ int main()
 
 		Matrix<complex<double>> cp0(2,2,cpxrc);
 		
-		Matrix<float> a(1,3, ramdomfloat10), b(1,3, ramdomfloat10);
+		Matrix<float> a(1,3, ramdomfloat10), bb(1,3, ramdomfloat10);
 		
 		
 
@@ -216,8 +216,8 @@ int main()
 		cout << "\ncp0=\n" << cp0.to_string() << endl;
 
 		cout << "\na=\n" << a.to_string() << endl;
-		cout << "\nb=\n" << b.to_string() << endl;
-		cout << "\na^b=\n" << (a^b) << endl;
+		cout << "\nb=\n" << bb.to_string() << endl;
+		cout << "\na^bb=\n" << (a^bb) << endl;
 
 		Matrix<complex<double>> idm;
 		idm = Matrix<complex<double>>::Id(3);
@@ -251,18 +251,30 @@ int main()
 		// LinearSys<float,string> *ls2 = new LinearSys<float, string>();	// Error C7500: nessuna funzione soddisfa i vincoli
 		
 		//Matrix<double> A(3,3,ramdomdouble20);
-		Matrix<double> A;
-		/*A.set(3,3,	{	1, 2, 3,
-									-2, 4, -7,
-									5, 6, 1 });*/
-		A.set(4, 4, { 1, 2, 3, 4
-									-2, 4, -7, -3,
-									5, 6, 1, 0,
-									0, 10, -4, 0
-									});
-		cout << "A:\n" << A.to_string() << endl;
 		
+		Matrix<double> A, xo, b, x;
+		
+		/*
+		A.set(3,3,	{	1, 2, 3,
+						-2, 4, -7,
+						5, 6, 1 });
+		*/
+		A.set(4, 4, { 0, 2, 0, -1,
+									2, -1, 1, -2,
+									1, 0, -2, 1,
+									-1, 3, 1, 1
+									});
+		xo.set(4, 1, {1, 0, -3, 3});
+		
+		b = A * xo;
+
+		cout << "\nA:\n" << A.to_string() << endl;
+		cout << "\nxo:\n" << xo.to_string() << endl;
+		cout << "\nb=A*xo:\n" << b.to_string() << endl;
+
 		ls2->factor(A);
+		
+		cout << "\nls2:Factor()\n" << ls2->to_string() << endl;
 		
 		/*	Verifica con GNU Octave
 		>> A = [1 2 3; -2 4 -7; 5 6 1]
@@ -276,11 +288,11 @@ int main()
 		U =		5.0000	6.0000	1.0000
 				0	6.4000	-6.6000
 				0	0	3.6250
-		>> b=[5 3 10]'
-		b =		5
+		>> bb=[5 3 10]'
+		bb =		5
 				3
 				10
-		>> x=A\b
+		>> x=A\bb
 		x =		-0.1552
 				1.6983
 				0.5862
@@ -290,26 +302,17 @@ int main()
 				10
 		*/
 		
-		Matrix<double> xx;
-		Matrix<double> bb;
-		
-		//bb.set(3,1,{5, 3, 10});
-		bb.set(4, 1, { 0, 0, 0, 0 });
-		cout << "bb=\n" << bb.to_string() << endl;
-
-		cout << "ls2=\n" << ls2->to_string() << endl;
-
 		if(ls2->solve_check())
 			{
-			ls2->solve(xx, bb);
+			ls2->solve(x, b);
 			}
 		else
 			{
-			cout << "solve_check non superato" << endl;
+			cout << "\nsolve_check non superato" << endl;
 			}
-		cout << "xx=\n" << xx.to_string() << endl;
-		cout << "A*x=\n" << (A*xx).to_string() << endl;
-
+		cout << "\nx=\n" << x.to_string() << endl;
+		cout << "\nA*x=\n" << (A*x).to_string() << endl;
+		cout << "\nx-xo\n" << (x-xo).to_string() << endl;
 		}
 	catch (const std::runtime_error ex)
 		{

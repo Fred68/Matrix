@@ -34,9 +34,9 @@ template <class DATA, class MOD> bool LinearSys<DATA, MOD>::factor(Matrix <DATA>
 	int k, i, io, j;				// Ciclo di calcolo
 	MOD amax;				
 	DATA tmp;
-	for (_det = (DATA)1, io = 0, k = 0; k < n - 1; k++)		// Ciclo 1 su tutte le righe k=0...n-2
+	for (_det = (DATA)1, k = 0; k < n - 1; k++)			// Ciclo 1 su tutte le righe k=0...n-2
 		{
-		for (amax = (MOD)0, i = k; i < n; i++)				// Cerca la riga (io), dalla k in poi, con il massimo amax sulla colonna k.
+		for (amax = (MOD)0, io = i = k; i < n; i++)			// Cerca la riga (io), dalla k in poi, con il massimo amax sulla colonna k.
 			{
 			if (abs(a(i, k)) >= amax)
 				{
@@ -99,7 +99,7 @@ template <class DATA, class MOD> bool LinearSys<DATA, MOD>::solve(Matrix <DATA> 
 		}
 	int k,j,i;
 	DATA tmp;
-
+	
 	for (k = 0; k < n - 1; k++)			// Ciclo su tutte le righe, tranne l'ultima
 		{
 		j = pivot(k,0);		// Ottiene la riga da scambiare con le riga k
@@ -111,14 +111,14 @@ template <class DATA, class MOD> bool LinearSys<DATA, MOD>::solve(Matrix <DATA> 
 			}
 		for(i=k+1; i<n; i++)
 			{
-			x(i, 0) = x(i, 0) + a(i, k) * x(k, 0);	// Non usa l'operatore+=, nel caso in cui sia definito solo l'operatore +
+			x(i, 0) += a(i, k) * x(k, 0);
 			}
 		}
 	x(n-1, 0) = x(n-1, 0) / a(n-1, n-1);
-	for (i = n - 1; i >= 0; i--)
+	for (i = n - 2; i >= 0; i--)
 		{
 		for (tmp = (DATA)0.0, j = i + 1; j < n; j++)
-			tmp = tmp + a(i, j) * x(j, 0);			// Non usa l'operatore+=, nel caso in cui sia definito solo l'operatore +
+			tmp += a(i, j) * x(j, 0);
 		x(i, 0) = (x(i, 0) - tmp) / a(i, i);
 		}
 	return true;
